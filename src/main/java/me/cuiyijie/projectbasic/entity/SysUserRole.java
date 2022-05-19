@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+
+import lombok.Data;
 import me.cuiyijie.projectbasic.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,8 +20,7 @@ import lombok.Setter;
  * @author cuiyijie
  * @since 2022-05-16
  */
-@Getter
-@Setter
+@Data
 @TableName("sys_user_role")
 @ApiModel(value = "SysUserRole对象", description = "")
 public class SysUserRole {

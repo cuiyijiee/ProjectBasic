@@ -35,8 +35,4 @@ public class RedisConfig {
         return redisTemplate;
 
     }
-
-    RedisUtil redisUtil() {
-
-    }
 }
