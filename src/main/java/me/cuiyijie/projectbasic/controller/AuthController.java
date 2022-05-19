@@ -44,9 +44,8 @@ public class AuthController extends BaseController {
         BASE64Encoder encoder = new BASE64Encoder();
         String str = "data:image/jpeg;base64,";
         String base64Img = str + encoder.encode(outputStream.toByteArray());
-
         // 存储到redis中
-        redisUtil.hset(Const.CAPTCHA_KEY, key, code, 120);
+        redisUtil.set(Const.CAPTCHA_KEY + "_" + key,code,120);
         log.info("验证码 -- {} - {}", key, code);
         return Result.success(
                 MapUtil.builder()
@@ -55,6 +54,4 @@ public class AuthController extends BaseController {
                         .build()
         );
     }
-
-
 }

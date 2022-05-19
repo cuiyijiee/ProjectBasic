@@ -52,7 +52,6 @@ public class CaptchaFilter extends OncePerRequestFilter {
     }
 
     private void validate(HttpServletRequest request) {
-
         //登录请求采用POST表单进行登录，取出验证码参数进行校验
         String code = request.getParameter("code");
         String token = request.getParameter("token");
@@ -60,10 +59,10 @@ public class CaptchaFilter extends OncePerRequestFilter {
         if (StringUtils.isBlank(code) || StringUtils.isBlank(token)) {
             throw new CaptchaException("验证码不能为空");
         }
-        if (!code.equals(redisUtil.hget(Const.CAPTCHA_KEY, token))) {
+        if (!code.equals(redisUtil.get(Const.CAPTCHA_KEY + "_" + token))) {
             throw new CaptchaException("验证码不正确");
         }
         // 一次性使用
-        redisUtil.hdel(Const.CAPTCHA_KEY, token);
+        redisUtil.del(Const.CAPTCHA_KEY + "_" + token);
     }
 }
