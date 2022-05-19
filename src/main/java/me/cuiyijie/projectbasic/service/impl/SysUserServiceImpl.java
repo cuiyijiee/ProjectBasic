@@ -1,9 +1,11 @@
 package me.cuiyijie.projectbasic.service.impl;
 
+import me.cuiyijie.common.utils.RedisUtil;
 import me.cuiyijie.projectbasic.entity.SysUser;
 import me.cuiyijie.projectbasic.mapper.SysUserMapper;
 import me.cuiyijie.projectbasic.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**

@@ -28,3 +28,5 @@ Spring Security相关参考教程
 
 * [开发SpringBoot+Jwt+Vue的前后端分离后台管理系统VueAdmin - 后端笔记](https://www.zhuawaba.com/post/19)
 * [手把手教你开发SpringBoot+Jwt+Vue的前后端分离后台管理系统](https://www.bilibili.com/video/BV1af4y1s7Wh?p=29&spm_id_from=pageDriver)
+* [Spring security处理流程图 - 公众号MarkerHub](https://www.processon.com/view/link/606b0b5307912932d09adcb3?fileGuid=OnZDwoxFFL8bnP1c)
+* [Spring Security 实战干货：必须掌握的一些内置 Filter](https://blog.csdn.net/qq_35067322/article/details/102690579?fileGuid=OnZDwoxFFL8bnP1c)
