@@ -29,10 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     LoginSuccessHandler loginSuccessHandler;
     @Autowired
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-
     @Autowired
     CaptchaFilter captchaFilter;
 
@@ -47,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .formLogin()
-                .failureHandler(loginFailureHandler)
                 .successHandler(loginSuccessHandler)
+                .failureHandler(loginFailureHandler)
 
                 .and()
                 .authorizeRequests()
