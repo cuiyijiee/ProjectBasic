@@ -5,6 +5,8 @@ import me.cuiyijie.common.security.MyUserDetail;
 import org.springframework.security.core.AuthenticationException;
 
 /**
+ * 第三方登录方式抽象类
+ *
  * @Author: yjcui3
  * @Date: 2022/6/22 17:23
  */

@@ -3,6 +3,8 @@ package me.cuiyijie.common.security;
 import me.cuiyijie.common.lang.Const;
 import me.cuiyijie.common.security.integration.IntegrationAuthenticationFilter;
 import me.cuiyijie.common.security.integration.IntegrationUserDetailService;
+import me.cuiyijie.common.security.integration.handler.LoginFailureHandler;
+import me.cuiyijie.common.security.integration.handler.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
