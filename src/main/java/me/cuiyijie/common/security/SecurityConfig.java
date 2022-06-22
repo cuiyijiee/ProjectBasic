@@ -31,8 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    CaptchaFilter captchaFilter;
 
     @Bean
     JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
@@ -63,8 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
                 .and()
-                .addFilter(jwtAuthenticationFilter())
-                .addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilter(jwtAuthenticationFilter());
+                //.addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

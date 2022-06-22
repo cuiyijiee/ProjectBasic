@@ -2,7 +2,7 @@ package me.cuiyijie.projectbasic;
 
 import lombok.extern.slf4j.Slf4j;
 import me.cuiyijie.projectmanager.api.ecology.EcologyApi;
-import me.cuiyijie.projectmanager.api.ecology.entity.JoyeaUserProfile;
+import me.cuiyijie.projectmanager.api.ecology.entity.JoyeaUserProfileResp;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,10 +22,9 @@ public class EcologyTest {
     void contextLoads() {
 
         //http://hi.joyea.cn:90/sso/oauth2.0/authorize?client_id=356543ea-9f8d-4138-bd89-e798b9284e46&response_type=code&redirect_uri=http://zlgl.yexiang.tech:8080/%23/login#/login
-        String accessToken = ecologyApi.getAccessTokenByTicket("ST-730-kNNzGMFHSawQc5NwdnyR-c01").getAccessToken();
-        JoyeaUserProfile profile = ecologyApi.getUserInfoByToken(accessToken);
-        log.info("get profile: {}",profile);
-
+        String accessToken = ecologyApi.getAccessTokenByTicket("ST-748-PgKtPgfhNZKaB7l7yxhz-c01").getAccessToken();
+        JoyeaUserProfileResp profile = ecologyApi.getUserInfoByToken(accessToken);
+        log.info("get profile: {}", profile);
     }
 
 }

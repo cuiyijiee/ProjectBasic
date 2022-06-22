@@ -2,7 +2,6 @@ package me.cuiyijie.projectmanager.api.ecology;
 
 import lombok.extern.slf4j.Slf4j;
 import me.cuiyijie.projectmanager.api.ecology.entity.JoyeaAccessToken;
-import me.cuiyijie.projectmanager.api.ecology.entity.JoyeaUserProfile;
 import me.cuiyijie.projectmanager.api.ecology.entity.JoyeaUserProfileResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,13 +11,19 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 /**
+ * 泛微ecology oauth2登录相关接口
+ * 1.前端通过跳转到泛微授权界面，
+ * 2.授权成功之后会将ticket回调到我们的前端页面，
+ * 3.前端将ticket回传给后端，
+ * 4.后端通过ticket获取到accessToken，
+ * 5.进而获取到用户信息
+ *
  * @author cyj976655@gmail.com
  * @date 2022/6/21 23:23
  */
 @Slf4j
 @Component
 public class EcologyApi {
-
 
     @Value("${joyea.ecology.token.url}")
     private String accessTokenUrl;
@@ -49,10 +54,9 @@ public class EcologyApi {
         return result;
     }
 
-    public JoyeaUserProfile getUserInfoByToken(String token) {
+    public JoyeaUserProfileResp getUserInfoByToken(String token) {
         MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();
         form.add("access_token", token);
-        JoyeaUserProfileResp result = restTemplate.postForObject(profileUrl, form, JoyeaUserProfileResp.class);
-        return result.getAttributes();
+        return restTemplate.postForObject(profileUrl, form, JoyeaUserProfileResp.class);
     }
 }
