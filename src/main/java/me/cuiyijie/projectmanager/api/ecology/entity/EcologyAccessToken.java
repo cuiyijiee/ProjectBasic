@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 
 @Data
-public class JoyeaAccessToken {
+public class EcologyAccessToken {
 
     private String msg;
     @JsonAlias("access_token")

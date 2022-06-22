@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 
 @Data
-public class JoyeaUserProfileResp {
+public class EcologyUserProfileResp {
 
 
     private String msg;

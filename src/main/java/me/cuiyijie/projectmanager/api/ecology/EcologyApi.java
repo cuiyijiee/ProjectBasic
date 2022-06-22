@@ -1,8 +1,8 @@
 package me.cuiyijie.projectmanager.api.ecology;
 
 import lombok.extern.slf4j.Slf4j;
-import me.cuiyijie.projectmanager.api.ecology.entity.JoyeaAccessToken;
-import me.cuiyijie.projectmanager.api.ecology.entity.JoyeaUserProfileResp;
+import me.cuiyijie.projectmanager.api.ecology.entity.EcologyAccessToken;
+import me.cuiyijie.projectmanager.api.ecology.entity.EcologyUserProfileResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -43,20 +43,20 @@ public class EcologyApi {
     @Autowired
     RestTemplate restTemplate;
 
-    public JoyeaAccessToken getAccessTokenByTicket(String ticket) {
+    public EcologyAccessToken getAccessTokenByTicket(String ticket) {
         MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();
         form.add("client_id", clientId);
         form.add("client_secret", clientSecret);
         form.add("grant_type", "authorization_code");
         form.add("redirect_uri", redirectUrl);
         form.add("code", ticket);
-        JoyeaAccessToken result = restTemplate.postForObject(accessTokenUrl, form, JoyeaAccessToken.class);
+        EcologyAccessToken result = restTemplate.postForObject(accessTokenUrl, form, EcologyAccessToken.class);
         return result;
     }
 
-    public JoyeaUserProfileResp getUserInfoByToken(String token) {
+    public EcologyUserProfileResp getUserInfoByToken(String token) {
         MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();
         form.add("access_token", token);
-        return restTemplate.postForObject(profileUrl, form, JoyeaUserProfileResp.class);
+        return restTemplate.postForObject(profileUrl, form, EcologyUserProfileResp.class);
     }
 }

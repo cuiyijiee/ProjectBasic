@@ -14,7 +14,7 @@ public class IntegrationAuthentication {
 
     private String authType;
 
-    private String ticket;
+    private String password;
 
     private Map<String, String[]> parameterMap;
 
