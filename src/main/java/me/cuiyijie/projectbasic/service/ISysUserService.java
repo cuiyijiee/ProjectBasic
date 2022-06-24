@@ -1,6 +1,6 @@
 package me.cuiyijie.projectbasic.service;
 
-import me.cuiyijie.projectbasic.entity.SysUser;
+import me.cuiyijie.projectbasic.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author cuiyijie
  * @since 2022-05-16
  */
-public interface ISysUserService extends IService<SysUser> {
+public interface ISysUserService extends IService<User> {
 
-    SysUser getByUsername(String username);
+    User getByUsername(String username);
 }

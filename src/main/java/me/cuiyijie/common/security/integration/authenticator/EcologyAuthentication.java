@@ -5,7 +5,7 @@ import me.cuiyijie.common.security.MyUserDetail;
 import me.cuiyijie.common.security.integration.AbstractIntegrationAuthenticator;
 import me.cuiyijie.common.security.integration.IntegrationAuthentication;
 import me.cuiyijie.common.security.integration.enums.LoginType;
-import me.cuiyijie.projectbasic.entity.SysUser;
+import me.cuiyijie.projectbasic.entity.User;
 import me.cuiyijie.projectmanager.api.ecology.EcologyApi;
 import me.cuiyijie.projectmanager.api.ecology.entity.EcologyAccessToken;
 import me.cuiyijie.projectmanager.api.ecology.entity.EcologyUserProfileResp;
@@ -62,8 +62,8 @@ public class EcologyAuthentication extends AbstractIntegrationAuthenticator {
             throw new AuthenticationServiceException("泛微ecology认证异常！");
         }
 
-        SysUser sysUser = new SysUser();
-        sysUser.setUsername(ecologyUserProfileResp.getAttributes().getLastName());
+        User sysUser = new User();
+        sysUser.setUserName(ecologyUserProfileResp.getAttributes().getLastName());
         sysUser.setId(sysUser.getId());
         return MyUserDetail.build(sysUser, new HashSet<>(), new HashSet<>());
     }

@@ -1,6 +1,6 @@
 package me.cuiyijie.projectbasic.mapper;
 
-import me.cuiyijie.projectbasic.entity.SysUser;
+import me.cuiyijie.projectbasic.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @since 2022-05-16
  */
 @Repository
-public interface SysUserMapper extends BaseMapper<SysUser> {
+public interface SysUserMapper extends BaseMapper<User> {
 
 }

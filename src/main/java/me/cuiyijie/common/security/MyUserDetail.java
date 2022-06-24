@@ -1,7 +1,7 @@
 package me.cuiyijie.common.security;
 
 import lombok.Data;
-import me.cuiyijie.projectbasic.entity.SysUser;
+import me.cuiyijie.projectbasic.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -25,10 +25,10 @@ public class MyUserDetail implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
     private boolean enabled;
 
-    public static MyUserDetail build(SysUser sysUser, Set<String> roles, Set<String> resources){
+    public static MyUserDetail build(User sysUser, Set<String> roles, Set<String> resources){
         MyUserDetail userDetail = new MyUserDetail();
-        userDetail.password = sysUser.getPassword();
-        userDetail.username = sysUser.getUsername();
+        userDetail.password = sysUser.getPwd();
+        userDetail.username = sysUser.getUserName();
         //权限相关
         Set<GrantedAuthority> authorities = new HashSet<>();
         Set<String> permissions = new HashSet<>();
