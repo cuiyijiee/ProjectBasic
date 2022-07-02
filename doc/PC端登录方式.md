@@ -29,7 +29,7 @@ http://zlgl.yexiang.tech:8080/apiv2/login
 * authType:ecology   ##PC端是eclogy，手机端是nextplus
 * code:ST-1001-Jd9T14aThhVWS9b1sK1B-c01  ##泛微返回的ticket，或者nextplus返回的code
 
-![登录图片](doc/img/img.png)
+![登录图片](img/img.png)
 
 *** 登录成功会返回用户信息，并且在response header中返回X-Token。后续的所有请求需要将X-Token放在请求头中。
 
