@@ -1,10 +1,12 @@
 package me.cuiyijie.common.security;
 
-import me.cuiyijie.common.lang.Const;
+import me.cuiyijie.common.lang.Constants;
 import me.cuiyijie.common.security.integration.IntegrationAuthenticationFilter;
 import me.cuiyijie.common.security.integration.IntegrationUserDetailService;
 import me.cuiyijie.common.security.integration.handler.LoginFailureHandler;
 import me.cuiyijie.common.security.integration.handler.LoginSuccessHandler;
+import me.cuiyijie.common.security.integration.handler.MyAccessDeniedHandler;
+import me.cuiyijie.common.security.integration.handler.MyAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -39,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 //    @Autowired
 //    UserDetailsServiceImpl userDetailsService;
+
+
     @Resource
     private IntegrationAuthenticationFilter integrationAuthenticationFilter;
 
@@ -60,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(Const.URL_WHITELIST).permitAll()
+                .antMatchers(Constants.URL_WHITELIST).permitAll()
                 .anyRequest().authenticated()
 
 //                .and()
@@ -70,11 +74,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //异常处理
                 .and()
                 .exceptionHandling()
+                .accessDeniedHandler(new MyAccessDeniedHandler())
+                .authenticationEntryPoint(new MyAuthenticationEntryPoint()) //401
                 //.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
                 .and()
-                //.addFilter(jwtAuthenticationFilter());
-                ;
+        //.addFilter(jwtAuthenticationFilter());
+        ;
     }
 
     @Bean
@@ -90,10 +96,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 自定义密码编码器
      * DelegatingPasswordEncoder 密码密文字符串前用加'{密码类型}',不同密码类型用不同的PasswordEncoder解析
+     *
      * @return
      */
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }

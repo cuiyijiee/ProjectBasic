@@ -40,15 +40,31 @@ public class EcologyApi {
     @Value("${joyea.ecology.clientSecret}")
     private String clientSecret;
 
+    @Value("${joyea.ecology-dev.redirect.url}")
+    private String devRedirectUrl;
+
+    @Value("${joyea.ecology-dev.clientId}")
+    private String devClientId;
+
+    @Value("${joyea.ecology-dev.clientSecret}")
+    private String devClientSecret;
+
     @Autowired
     RestTemplate restTemplate;
 
-    public EcologyAccessToken getAccessTokenByTicket(String ticket) {
+    public EcologyAccessToken getAccessTokenByTicket(String ticket, boolean isDev) {
         MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();
-        form.add("client_id", clientId);
-        form.add("client_secret", clientSecret);
         form.add("grant_type", "authorization_code");
-        form.add("redirect_uri", redirectUrl);
+        if(isDev) {
+            form.add("client_id", devClientId);
+            form.add("client_secret", devClientSecret);
+            form.add("redirect_uri", devRedirectUrl);
+        }else{
+            form.add("client_id", clientId);
+            form.add("client_secret", clientSecret);
+            form.add("redirect_uri", redirectUrl);
+        }
+
         form.add("code", ticket);
         EcologyAccessToken result = restTemplate.postForObject(accessTokenUrl, form, EcologyAccessToken.class);
         return result;

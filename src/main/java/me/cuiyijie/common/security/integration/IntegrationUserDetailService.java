@@ -2,6 +2,7 @@ package me.cuiyijie.common.security.integration;
 
 import me.cuiyijie.common.security.MyUserDetail;
 import me.cuiyijie.common.security.integration.exception.AuthenticatorNotFoundException;
+import me.cuiyijie.common.utils.JsonBeanConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,12 +29,15 @@ public class IntegrationUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         IntegrationAuthentication integrationAuthentication = IntegrationAuthenticationContext.get();
+        if (integrationAuthentication == null || integrationAuthentication.getAuthType() == null) {
+            throw new AuthenticatorNotFoundException("登录信息不能为空: " + JsonBeanConvertUtils.beanToJson(integrationAuthentication));
+        }
         if (this.integrationAuthenticators != null) {
             for (AbstractIntegrationAuthenticator authenticator : integrationAuthenticators) {
                 if (authenticator.support(integrationAuthentication)) {
-                    MyUserDetail myUserDetail =  authenticator.authenticate(integrationAuthentication);
+                    MyUserDetail myUserDetail = authenticator.authenticate(integrationAuthentication);
                     //如果密码不为空，覆盖密码， 后期密码不验证
-                    if(integrationAuthentication.getPassword() != null) {
+                    if (integrationAuthentication.getPassword() != null) {
                         myUserDetail.setPassword(passwordEncoder.encode(integrationAuthentication.getPassword()));
                         //userDetail.getSysUser().setPassword(passwordEncoder.encode(integrationAuthentication.getPassword()));
                     }
@@ -41,6 +45,6 @@ public class IntegrationUserDetailService implements UserDetailsService {
                 }
             }
         }
-        throw new AuthenticatorNotFoundException("未知登录方式:"+integrationAuthentication.getAuthType());
+        throw new AuthenticatorNotFoundException("未知登录方式:" + integrationAuthentication.getAuthType());
     }
 }

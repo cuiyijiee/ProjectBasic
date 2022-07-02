@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.cuiyijie.projectbasic.entity.BaseEntity;
@@ -43,6 +44,7 @@ public class User extends BaseEntity {
     @ApiModelProperty("用户姓名")
     private String nickName;
 
+    @JsonIgnore
     private String pwd;
 
     private String deptNo;

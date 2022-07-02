@@ -1,5 +1,6 @@
 package me.cuiyijie.common.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import me.cuiyijie.projectbasic.entity.User;
 import org.apache.commons.lang3.StringUtils;
@@ -19,14 +20,20 @@ import java.util.Set;
 public class MyUserDetail implements UserDetails {
 
 
-    //private SysUser sysUser;
+    private User user;
+
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private String username;
+    @JsonIgnore
     private Collection<? extends GrantedAuthority> authorities;
+    @JsonIgnore
     private boolean enabled;
 
     public static MyUserDetail build(User sysUser, Set<String> roles, Set<String> resources){
         MyUserDetail userDetail = new MyUserDetail();
+        userDetail.user = sysUser;
         userDetail.password = sysUser.getPwd();
         userDetail.username = sysUser.getUserName();
         //权限相关

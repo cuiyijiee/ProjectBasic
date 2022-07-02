@@ -1,11 +1,13 @@
 package me.cuiyijie.common.security.integration.authenticator;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import me.cuiyijie.common.security.MyUserDetail;
 import me.cuiyijie.common.security.integration.AbstractIntegrationAuthenticator;
 import me.cuiyijie.common.security.integration.IntegrationAuthentication;
 import me.cuiyijie.common.security.integration.enums.LoginType;
 import me.cuiyijie.projectbasic.entity.User;
+import me.cuiyijie.projectbasic.mapper.SysUserMapper;
 import me.cuiyijie.projectmanager.api.ecology.EcologyApi;
 import me.cuiyijie.projectmanager.api.ecology.entity.EcologyAccessToken;
 import me.cuiyijie.projectmanager.api.ecology.entity.EcologyUserProfileResp;
@@ -34,6 +36,9 @@ public class EcologyAuthentication extends AbstractIntegrationAuthenticator {
     @Autowired
     private EcologyApi ecologyApi;
 
+    @Autowired
+    private SysUserMapper sysUserMapper;
+
     @Override
     public boolean support(IntegrationAuthentication integrationAuthentication) {
         return AUTH_TYPE.equalsIgnoreCase(integrationAuthentication.getAuthType());
@@ -50,22 +55,24 @@ public class EcologyAuthentication extends AbstractIntegrationAuthenticator {
     @Override
     public MyUserDetail authenticate(IntegrationAuthentication integrationAuthentication) throws AuthenticationException {
         String code = integrationAuthentication.getParameter(CODE_PARM_NAME);
+        boolean isDev = StringUtils.endsWithIgnoreCase("true", integrationAuthentication.getParameter("dev"));
         if (StringUtils.isBlank(code)) {
             throw new BadCredentialsException("泛微授权码为空！");
         }
         EcologyUserProfileResp ecologyUserProfileResp;
         try {
-            EcologyAccessToken accessToken = ecologyApi.getAccessTokenByTicket(code);
+            EcologyAccessToken accessToken = ecologyApi.getAccessTokenByTicket(code, isDev);
             ecologyUserProfileResp = ecologyApi.getUserInfoByToken(accessToken.getAccessToken());
         } catch (Exception exception) {
             log.error("泛微ecology认证失败:", exception);
             throw new AuthenticationServiceException("泛微ecology认证异常！");
         }
 
-        User sysUser = new User();
-        sysUser.setUserName(ecologyUserProfileResp.getAttributes().getLastName());
-        sysUser.setId(sysUser.getId());
-        return MyUserDetail.build(sysUser, new HashSet<>(), new HashSet<>());
+        User user = sysUserMapper.selectOne(new QueryWrapper<User>().eq("user_name", ecologyUserProfileResp.getAttributes().getMobile()));
+        if (user == null) {
+            throw new AuthenticationServiceException("该用户没有同步，请联系管理员进行同步！");
+        }
+        return MyUserDetail.build(user, new HashSet<>(), new HashSet<>());
     }
 
     @Override

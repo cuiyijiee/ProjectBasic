@@ -3,12 +3,10 @@ package me.cuiyijie.projectbasic.controller;
 import cn.hutool.core.map.MapUtil;
 import com.google.code.kaptcha.Producer;
 import lombok.extern.slf4j.Slf4j;
-import me.cuiyijie.common.lang.Const;
+import me.cuiyijie.common.lang.Constants;
 import me.cuiyijie.common.lang.Result;
-import me.cuiyijie.common.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import sun.misc.BASE64Encoder;
 
@@ -45,7 +43,7 @@ public class AuthController extends BaseController {
         String str = "data:image/jpeg;base64,";
         String base64Img = str + encoder.encode(outputStream.toByteArray());
         // 存储到redis中
-        redisUtil.set(Const.CAPTCHA_KEY + "_" + key,code,120);
+        redisUtil.set(Constants.CAPTCHA_KEY + "_" + key,code,120);
         log.info("验证码 -- {} - {}", key, code);
         return Result.success(
                 MapUtil.builder()
