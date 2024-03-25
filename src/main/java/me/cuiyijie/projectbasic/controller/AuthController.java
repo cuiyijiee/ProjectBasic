@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,7 +31,7 @@ public class AuthController extends BaseController {
      * 图片验证码
      */
     @GetMapping("/captcha")
-    public Result captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Result captcha() throws IOException {
         String code = producer.createText();
         String key = UUID.randomUUID().toString();
         BufferedImage image = producer.createImage(code);
